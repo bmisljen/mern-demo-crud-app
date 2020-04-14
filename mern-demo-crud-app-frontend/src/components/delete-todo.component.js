@@ -15,8 +15,12 @@ export default class Delete extends Component {
    }
 
    componentDidMount() {
-     axios.post('http://localhost:4000/todos/delete'+this.props.match.params.id)
+     axios.post('http://localhost:4000/todos/delete/'+this.props.match.params.id)
                  .then(res => console.log(res.data));
      this.props.history.push('/');
   }
+
+  render() {
+      return null
+    }
  }
