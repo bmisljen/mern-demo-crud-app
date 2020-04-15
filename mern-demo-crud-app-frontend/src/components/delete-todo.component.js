@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+/*
+This component allows us to delete an existing todo
+*/
 export default class Delete extends Component {
 
   constructor(props) {
@@ -15,6 +18,7 @@ export default class Delete extends Component {
    }
 
    componentDidMount() {
+     // delete todo by id and then return to the homepage
      axios.post('http://localhost:4000/todos/delete/'+this.props.match.params.id)
                  .then(res => console.log(res.data));
      this.props.history.push('/');

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+/*
+This component allows us to create a new todo
+*/
 export default class CreateTodo extends Component {
 
     constructor(props) {
@@ -10,6 +13,7 @@ export default class CreateTodo extends Component {
         this.onChangeTodoResponsible = this.onChangeTodoResponsible.bind(this);
         this.onChangeTodoPriority = this.onChangeTodoPriority.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.validateForm = this.validateForm.bind(this);
         this.cancel = this.cancel.bind(this);
 
 
@@ -39,29 +43,54 @@ export default class CreateTodo extends Component {
         });
     }
 
+    validateForm() {
+      // ensure that a todo is not submitted with empty fields
+      var todo_description = this.state.todo_description;
+      var todo_responsible = this.state.todo_responsible;
+      var todo_priority = this.state.todo_priority;
+
+
+      if (todo_description == null || todo_description == '' ||
+      todo_responsible == null || todo_responsible == '' ||
+      todo_priority == null || todo_priority == '') {
+        alert("Todo fields must be filled out");
+        return false;
+      }
+      return true;
+    }
+
     onSubmit(e) {
         e.preventDefault();
+        if (this.validateForm()) {
+          // only submit a new todo if all fields are filled out
 
-        console.log(`Form submitted:`);
-        console.log(`Todo Description: ${this.state.todo_description}`);
-        console.log(`Todo Responsible: ${this.state.todo_responsible}`);
-        console.log(`Todo Priority: ${this.state.todo_priority}`);
+          const newTodo = {
+            todo_description: this.state.todo_description,
+            todo_responsible: this.state.todo_responsible,
+            todo_priority: this.state.todo_priority,
+            todo_completed: this.state.todo_completed
+          };
 
-        const newTodo = {
-                 todo_description: this.state.todo_description,
-                 todo_responsible: this.state.todo_responsible,
-                 todo_priority: this.state.todo_priority,
-                 todo_completed: this.state.todo_completed
-             };
+          axios.post('http://localhost:4000/todos/add', newTodo)
+          .then(res => console.log(res.data));
 
-        axios.post('http://localhost:4000/todos/add', newTodo)
-                    .then(res => console.log(res.data));
-
-        // after creating the todo, go to the homepage
-        this.props.history.push('/');
+          // after creating the todo, go to the homepage
+          this.props.history.push('/');
+        }
+      else
+      {
+        // if the todo wasn't filled out properly, reset the fields
+        this.setState({
+                 todo_description: '',
+                 todo_responsible:'',
+                 todo_priority: '',
+                 todo_completed: false
+             })
+      }
     }
 
     cancel() {
+      // cancel the creation of the todo and return to the homepage
       this.props.history.push('/');
     }
 

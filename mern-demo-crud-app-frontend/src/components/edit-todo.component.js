@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-
+/*
+This component allows us to edit the values of a todo
+*/
 export default class EditTodo extends Component {
 
   constructor(props) {
@@ -11,6 +13,7 @@ export default class EditTodo extends Component {
        this.onChangeTodoResponsible = this.onChangeTodoResponsible.bind(this);
        this.onChangeTodoPriority = this.onChangeTodoPriority.bind(this);
        this.onChangeTodoCompleted = this.onChangeTodoCompleted.bind(this);
+       this.validateForm = this.validateForm.bind(this);
        this.onSubmit = this.onSubmit.bind(this);
        this.cancel = this.cancel.bind(this);
 
@@ -23,6 +26,7 @@ export default class EditTodo extends Component {
    }
 
    componentDidMount() {
+      // get the todo by id from the database and list the todo parameters
       axios.get('http://localhost:4000/todos/'+this.props.match.params.id)
           .then(response => {
               this.setState({
@@ -61,22 +65,43 @@ export default class EditTodo extends Component {
         });
     }
 
+    validateForm() {
+      // ensure that an edited todo is not submitted with empty fields
+      var todo_description = this.state.todo_description;
+      var todo_responsible = this.state.todo_responsible;
+      var todo_priority = this.state.todo_priority;
+
+
+      if (todo_description == null || todo_description == '' ||
+      todo_responsible == null || todo_responsible == '' ||
+      todo_priority == null || todo_priority == '') {
+        alert("Todo fields must be filled out");
+        return false;
+      }
+      return true;
+    }
+
     onSubmit(e) {
-        e.preventDefault();
+      e.preventDefault();
+      if (this.validateForm()) {
+        // only submit a todo if all fields are filled out
         const obj = {
-            todo_description: this.state.todo_description,
-            todo_responsible: this.state.todo_responsible,
-            todo_priority: this.state.todo_priority,
-            todo_completed: this.state.todo_completed
+          todo_description: this.state.todo_description,
+          todo_responsible: this.state.todo_responsible,
+          todo_priority: this.state.todo_priority,
+          todo_completed: this.state.todo_completed
         };
         console.log(obj);
         axios.post('http://localhost:4000/todos/update/'+this.props.match.params.id, obj)
-            .then(res => console.log(res.data));
+        .then(res => console.log(res.data));
 
+        // return to the homepage after the todo is submitted
         this.props.history.push('/');
+      }
     }
 
     cancel() {
+      // canel the editing of a todo and return to the homepage
       this.props.history.push('/');
     }
 

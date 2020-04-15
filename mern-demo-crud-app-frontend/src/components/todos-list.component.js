@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+/*
+The homepage of our app. All current todos will be listed here
+*/
 
+// define a Todo
 const Todo = props => (
     <tr>
         <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_description}</td>
@@ -25,6 +29,7 @@ export default class TodosList extends Component {
   }
 
   componentDidMount() {
+     // get a list of all todos from the database
      axios.get('http://localhost:4000/todos/')
          .then(response => {
              this.setState({ todos: response.data });
@@ -35,6 +40,7 @@ export default class TodosList extends Component {
  }
 
  todoList() {
+    // returns all the todos in the collection one by one
     return this.state.todos.map(function(currentTodo, i){
         return <Todo todo={currentTodo} key={i} />;
     })
@@ -62,7 +68,6 @@ export default class TodosList extends Component {
                   <Link to={"/create"}>Create Todo</Link>
               </div>
            </div>
-
        )
    }
 }
