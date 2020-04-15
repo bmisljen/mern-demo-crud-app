@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 
-
-
 const Todo = props => (
     <tr>
         <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_description}</td>
@@ -60,7 +58,11 @@ export default class TodosList extends Component {
                        { this.todoList() }
                    </tbody>
                </table>
+               <div style={{display: 'flex', justifyContent: 'center'}}>
+                  <Link to={"/create"}>Create Todo</Link>
+              </div>
            </div>
+
        )
    }
 }

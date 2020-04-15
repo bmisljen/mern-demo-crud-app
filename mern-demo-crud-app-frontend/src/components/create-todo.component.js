@@ -10,6 +10,8 @@ export default class CreateTodo extends Component {
         this.onChangeTodoResponsible = this.onChangeTodoResponsible.bind(this);
         this.onChangeTodoPriority = this.onChangeTodoPriority.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.cancel = this.cancel.bind(this);
+
 
         this.state = {
             todo_description: '',
@@ -55,12 +57,12 @@ export default class CreateTodo extends Component {
         axios.post('http://localhost:4000/todos/add', newTodo)
                     .then(res => console.log(res.data));
 
-        this.setState({
-            todo_description: '',
-            todo_responsible: '',
-            todo_priority: '',
-            todo_completed: false
-        })
+        // after creating the todo, go to the homepage
+        this.props.history.push('/');
+    }
+
+    cancel() {
+      this.props.history.push('/');
     }
 
     render() {
@@ -120,10 +122,14 @@ export default class CreateTodo extends Component {
                             <label className="form-check-label">High</label>
                         </div>
                     </div>
-
-                    <div className="form-group">
-                        <input type="submit" value="Create Todo" className="btn btn-primary" />
-                    </div>
+                    <div class="form-row">
+                         <div class="form-group col-md-2">
+                           <input type="submit" value="Create Todo" className="btn btn-primary" />
+                         </div>
+                         <div class="form-group col-md-2">
+                           <input type="button" value="Cancel" onClick={this.cancel} className="btn btn-primary" />
+                         </div>
+                     </div>
                 </form>
             </div>
         )

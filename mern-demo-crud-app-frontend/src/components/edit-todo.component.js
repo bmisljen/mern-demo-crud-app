@@ -12,7 +12,8 @@ export default class EditTodo extends Component {
        this.onChangeTodoPriority = this.onChangeTodoPriority.bind(this);
        this.onChangeTodoCompleted = this.onChangeTodoCompleted.bind(this);
        this.onSubmit = this.onSubmit.bind(this);
-       
+       this.cancel = this.cancel.bind(this);
+
        this.state = {
            todo_description: '',
            todo_responsible: '',
@@ -73,6 +74,10 @@ export default class EditTodo extends Component {
             .then(res => console.log(res.data));
 
         this.props.history.push('/');
+    }
+
+    cancel() {
+      this.props.history.push('/');
     }
 
   render() {
@@ -148,9 +153,14 @@ export default class EditTodo extends Component {
 
                    <br />
 
-                   <div className="form-group">
-                       <input type="submit" value="Update Todo" className="btn btn-primary" />
-                   </div>
+                   <div class="form-row">
+                        <div class="form-group col-md-2">
+                          <input type="submit" value="Update Todo" className="btn btn-primary" />
+                        </div>
+                        <div class="form-group col-md-2">
+                          <input type="button" value="Cancel" onClick={this.cancel} className="btn btn-primary" />
+                        </div>
+                    </div>
                </form>
            </div>
        )
