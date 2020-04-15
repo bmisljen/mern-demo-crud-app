@@ -4,7 +4,7 @@ MERN Demo CRUD Application
 This app was built with the help from the tutorial found at: 
 https://codingthesmartway.com/the-mern-stack-tutorial-building-a-react-crud-application-from-start-to-finish-part-1/
 
-This is a todo CRUD (Create, Read, Edit, Delete) application built using the MERN stack (Mongo DB, Express.js, React.js and Node.js).  All exisitng notes are displayed on the home page. From there you can either create a new todo, edit an existing todo, or delete an exiting todo. All todos are stored in a MongoDB database through Mongoose. There is also validation put in place to stop users from submitting or editing a todo without filling in all required fields. 
+This is a todo CRUD (Create, Read, Edit, Delete) application built using the MERN stack (Mongo DB, Express.js, React.js and Node.js). The application was built in Ubuntu 18.04 using the Atom code editor. All existing todos are displayed on the home page. From there you can either create a new todo, edit an existing todo, or delete an exiting todo. All todos are stored in a MongoDB database connected through Mongoose. There is also validation put in place to stop users from submitting or editing a todo without filling in all the required fields. 
 
 In order to run the project, clone this repository into an empty directory. You then have to install and start MongoDB for your operating system: https://docs.mongodb.com/manual/administration/install-community/ and create a new todos database:
 
